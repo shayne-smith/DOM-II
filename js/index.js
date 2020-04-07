@@ -8,7 +8,7 @@
 // resize
 // scroll
 // select
-// dblclick
+// ---- dblclick
 
 // Create a function called 'get'
 // that takes a CSS selector as its argument
@@ -21,7 +21,10 @@ const getAll = (selector) => {
     return document.querySelectorAll(selector)
 }
 
+// ============= CREATE VARIABLES TO STORE ELEMENTS ===========
 // use 'get' function to retrieve specific elements
+const body = get('body')
+
 const mainNav = get('.main-navigation')
 const navLink = get('.nav-link')
 const logo = get('.logo-heading')
@@ -30,41 +33,50 @@ const intro = get('.intro')
 const contentSection = get('.content-section')
 const destination = get('.destination')
 
-const buttons = getAll('.btn') 
-console.log(buttons)
-
+const buttons = getAll('.btn') // creates a buttons array
 const footer = get('.footer')
 
 
-function changeNavColor(event) {
-    console.log('You are mousing over the navigation!')
+// ================= FUNCTION DECLARATIONS ==================
+function red(event) {
+    console.log('You are mousing over something!')
     event.target.style.backgroundColor = 'red'
 }
-mainNav.addEventListener('mouseover', changeNavColor)
-
-function yellowBtnColor(event) {
+function white(event) {
+    console.log('You are leaving something!')
+    event.target.style.backgroundColor = 'white'
+}
+function yellow(event) {
     console.log('You are changing button color')
     event.target.style.backgroundColor = 'yellow'
-    event.target.children.style.color = 'black'
 }
-
 function blackText(event) {
     console.log('You are changing button text')
     event.target.style.color = 'black'
 }
-
-for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', yellowBtnColor)
-    buttons[i].addEventListener('click', blackText)
-}
-
 function logoHover(event){
-    event.target.style.color = "blue"
+    event.target.style.color = 'blue'
 }
-
 function logoLeave(event) {
-    event.target.style.color = "black"
+    event.target.style.color = 'black'
+}
+function dimming(event) {
+    if (event.key === "ArrowDown"){
+        console.log('You are hitting down arrow')
+        event.target.style.opacity = 0.5
+    }
 }
 
-logo.addEventListener("mouseover", logoHover)
-logo.addEventListener("mouseleave", logoLeave)
+
+// ================== ADD EVENT LISTENERS ======================
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('dblclick', yellow)
+    buttons[i].addEventListener('dblclick', blackText)
+}
+
+mainNav.addEventListener('mouseover', red) // add event listener to navigation to turn it red when moused over
+
+logo.addEventListener('mouseover', logoHover)
+logo.addEventListener('mouseleave', logoLeave)
+
+body.addEventListener('keydown', dimming)
