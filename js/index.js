@@ -1,11 +1,12 @@
 // Your code goes here
 // ---- mouseover
+// ---- mousedown
 // ---- keydown **** Come back to this one and improve
-// wheel
+// ---- wheel
 // drag / drop
-// load
+// ---- load
 // focus
-// resize
+// ---- resize
 // scroll
 // select
 // ---- dblclick
@@ -36,12 +37,12 @@ const logo = get('.logo-heading')
 const intro = get('.intro')
 const headerImg = get('.intro img')
 const contentSection = get('.content-section')
-const destination = get('.destination')
+const destinationText = getAll('.destination')
 
 const buttons = getAll('.btn') // creates a buttons array
 const footer = get('.footer')
 
-let onOff = 0
+let onOff = 0 // create on/off state for image flipping
 
 
 // ================= FUNCTION DECLARATIONS ==================
@@ -89,6 +90,26 @@ function flipImg(event) {
         onOff = 0
     }
 }
+function popup(event) {
+    window.alert('You are resizing the webpage!')
+}
+function popupLoad(event) {
+    window.alert('The webpage is finished loading! :)')
+}
+function zoom(event) { // look over this tomorrow to understand better
+    event.preventDefault();
+
+    scale += event.deltaY * -0.01
+    
+    // Restrict scale
+    scale = Math.min(Math.max(.125, scale), 4)
+
+    // Apply scale transform
+    event.target.style.transform = `scale(${scale})`
+}
+function redBorder(event){
+    event.target.style.border = '5px dashed red'
+}
 
 // ================== ADD EVENT LISTENERS ======================
 for (let i = 0; i < buttons.length; i++) {
@@ -105,5 +126,18 @@ logo.addEventListener('mouseleave', logoLeave)
 
 body.addEventListener('keydown', dimming)
 body.addEventListener('keyup', brightening)
+window.addEventListener('load', popupLoad)
+
 
 headerImg.addEventListener('click', flipImg)
+window.addEventListener('resize', popup)
+
+// look over this tomorrow to understand better
+let scale = 0.5
+const adventureImg = get('.img-content img')
+adventureImg.addEventListener('wheel', zoom)
+
+for (let i = 0; i < destinationText.length; i++){
+    destinationText[i].addEventListener('mousedown', red)
+}
+
