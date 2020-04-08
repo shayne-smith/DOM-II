@@ -56,6 +56,7 @@ function red(event) {
 function white(event) {
     console.log('You are leaving something!')
     event.target.style.backgroundColor = 'white'
+    event.stopPropagation()
 }
 function yellow(event) {
     console.log('You are changing button color')
@@ -111,9 +112,6 @@ function zoom(event) {
 
     // Apply scale transform
     event.target.style.transform = `scale(${scale})`
-}
-function redBorder(event){
-    event.target.style.border = '5px dashed red'
 }
 
 // ================== ADD EVENT LISTENERS ======================
