@@ -31,7 +31,7 @@ const getAll = (selector) => {
 const body = get('body')
 
 const mainNav = get('.main-navigation')
-const navLink = get('.nav-link')
+const navLink = getAll('.nav-link')
 const logo = get('.logo-heading')
 
 const intro = get('.intro')
@@ -39,10 +39,13 @@ const headerImg = get('.intro img')
 const contentSection = get('.content-section')
 const destinationText = getAll('.destination')
 
+let onOff = 0 // create on/off state for image flipping
+
+let scale = 0.5
+const adventureImg = get('.img-content img')
+
 const buttons = getAll('.btn') // creates a buttons array
 const footer = get('.footer')
-
-let onOff = 0 // create on/off state for image flipping
 
 
 // ================= FUNCTION DECLARATIONS ==================
@@ -61,6 +64,10 @@ function yellow(event) {
 function blackText(event) {
     console.log('You are changing button text')
     event.target.style.color = 'black'
+}
+function whiteText(event) {
+    console.log('You are changing text color to white')
+    event.target.style.color = 'white'
 }
 function logoHover(event){
     event.target.style.color = 'blue'
@@ -96,13 +103,11 @@ function popup(event) {
 function popupLoad(event) {
     window.alert('The webpage is finished loading! :)')
 }
-function zoom(event) { // look over this tomorrow to understand better
-    event.preventDefault();
+function zoom(event) {
+    event.preventDefault()
 
-    scale += event.deltaY * -0.01
-    
-    // Restrict scale
-    scale = Math.min(Math.max(.125, scale), 4)
+    scale += event.deltaY * 0.0005
+    debugger
 
     // Apply scale transform
     event.target.style.transform = `scale(${scale})`
@@ -120,6 +125,11 @@ for (let i = 0; i < buttons.length; i++) {
 // add event listener to navigation to turn it red when moused over
 mainNav.addEventListener('mouseover', red) 
 
+for (let i = 0; i < navLink.length; i++) {
+    navLink[i].addEventListener('mouseover', white)
+    navLink[i].addEventListener('mouseleave', yellow)
+}
+
 // add event listener 
 logo.addEventListener('mouseover', logoHover)
 logo.addEventListener('mouseleave', logoLeave)
@@ -133,8 +143,6 @@ headerImg.addEventListener('click', flipImg)
 window.addEventListener('resize', popup)
 
 // look over this tomorrow to understand better
-let scale = 0.5
-const adventureImg = get('.img-content img')
 adventureImg.addEventListener('wheel', zoom)
 
 for (let i = 0; i < destinationText.length; i++){
